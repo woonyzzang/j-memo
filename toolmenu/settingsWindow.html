@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Core Settings :: JMemo</title>
+<style>
+*{margin:0;padding:0}
+:root{font-size:.625em;}
+body,button,h1,h2,h3,h4,h5,input,select,table,textarea{font-family:HelveticaNeue-Light,AppleSDGothicNeo-Light,sans-serif}
+fieldset{border:0}
+body{background-color:#282c34;font-size:1.4rem}
+.blind{overflow:hidden;clip:rect(0 0 0 0);position:absolute;width:1px;height:1px}
+.app-set{padding:1.6rem;color:#fff}
+.app-set>h1{overflow:hidden;clip:rect(0 0 0 0);position:absolute;width:1px;height:1px}
+.app-set>.guide{font-size:1.3rem;line-height:1.4;color:#9da5b4;word-break:break-all}
+.app-set .settings ul{margin-top:2rem;list-style:none}
+.app-set .settings li{margin-top:1.6rem}
+.app-set .settings li:first-child{margin-top:0}
+.app-set .settings label{font-weight:bold;font-size:1.4rem;color:#9da5b4}
+.app-set .settings label>span{display:inline-block;vertical-align:top}
+.app-set .settings input[type=checkbox]{-webkit-appearance:none;width:16px;height:16px;margin-right:.4rem;background:url(../src/img/bg_custom_chkbox.png) no-repeat;background-size:100% auto;vertical-align:top}
+.app-set .settings input[type=checkbox]:checked{background-image:url(../src/img/bg_custom_chkbox_on.png)}
+.app-set .settings select{width:100%;padding:.6rem;border:1px solid #181a1f;border-radius:.4rem;background-color:#353b45;color:#959cab}
+.app-set .settings .desc{margin:.6rem 0;font-size:1.2rem;color:#70707d}
+.app-set .settings .btn-area{margin-top:2rem;text-align:center}
+.app-set .settings .btn-area button[type=submit]{padding:1rem 2rem;border:1px solid #244588;background-color:#568af2;font-size:1.3rem;color:#fff;cursor:pointer}
+</style>
+</head>
+<body>
+<article class="app-set">
+  <h1>Core Settings</h1>
+  <p class="guide">
+    These are JMemo's core setting which affect behavior unrelated to memo editing.
+    When you change the settings, the application default settings are applied with the changed settings.
+  </p>
+  <section class="content">
+    <form>
+    <fieldset class="settings">
+      <legend class="blind">Core Setting</legend>
+      <ul>
+        <li>
+          <label><input type="checkbox" name="inptToolsBar" id="inptToolsBar"> <span>Tools Bar</span></label>
+          <p class="desc">Allow default toolbar area exposure.</p>
+        </li>
+        <li>
+          <label><input type="checkbox" name="inptUtilBar" id="inptUtilBar"> <span>Util Menu Bar</span></label>
+          <p class="desc">Allow menu bar area exposure.</p>
+        </li>
+        <li>
+          <label><input type="checkbox" name="inptDirBar" id="inptDirBar"> <span>Drectory Menu Bar</span></label>
+          <p class="desc">Allow drectory menu bar area exposed.</p>
+        </li>
+        <li>
+          <label><input type="checkbox" name="inptStyleMemoEditor" id="inptStyleMemoEditor"> <span>Style Memo Editor</span></label>
+          <p class="desc">Allow style memo editor function exposed.</p>
+        </li>
+        <li>
+          <label>Language</label>
+          <p class="desc">Set the default language.</p>
+          <select name="language">
+            <option value="en-US">English</option>
+            <option value="ko" disabled>Korean</option>
+          </select>
+        </li>
+      </ul>
+      <div class="btn-area"><button type="submit">Apply</button></div>
+    </fieldset>
+    </form>
+  </section>
+</article>
+
+<script>
+const electron = require('electron');
+const {ipcRenderer, remote} = electron;
+const fs = require('fs');
+
+const storeData = (() => {
+  try {
+    const userDataPath = (electron.app || remote.app).getPath('userData');
+    const dataFilePath = userDataPath + '/user-preferences.json';
+
+    if (fs.existsSync(dataFilePath)) {
+      return JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
+    }
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+})();
+
+// form to serialize
+function serialize(form) {
+  var result = [];
+
+  if (typeof form === 'object' && form.nodeName === 'FORM') {
+    Array.prototype.slice.call(form.elements).forEach(function(control) {
+      if (control.name && !control.disabled && ['file', 'reset', 'submit', 'button'].indexOf(control.type) === -1) {
+        if (control.type === 'select-multiple') {
+            Array.prototype.slice.call(control.options).forEach(function(option) {
+              if (option.selected) { result.push(encodeURIComponent(control.name) + '=' + encodeURIComponent(option.value)); }
+            });
+        } else if (['checkbox', 'radio'].indexOf(control.type) === -1 || control.checked) {
+          result.push(encodeURIComponent(control.name) + '=' + encodeURIComponent(control.value));
+        }
+      }
+    });
+  }
+
+  return result.join('&').replace(/%20/g, '+');
+}
+
+// form to JSON
+function toJSONString(form) {
+	let obj = {};
+	let elements = form.querySelectorAll('input, select, textarea');
+
+	for (let i = 0, len = elements.length; i < len; ++i) {
+		const element = elements[i];
+		const name = element.name;
+		const value = element.value;
+
+		if (name) { obj[name] = value; }
+	}
+
+	return JSON.stringify(obj);
+}
+
+const $settingForm = document.querySelector('form');
+const $inptChks = document.querySelectorAll('input[type=checkbox]');
+const $language = document.querySelector('select');
+const $btnSubmit = document.querySelector('button[type=submit]');
+
+// 폼 전송 이벤트 핸들러
+$settingForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // ipcMain Process 업데이트 설정 전송
+  ipcRenderer.send('config:update', toJSONString($settingForm));
+
+  // 윈도우 창 종료
+  const currentWindow = remote.getCurrentWindow();
+  currentWindow.close();
+});
+
+// 체크박스 초기화
+$inptChks.forEach((elem, index, array) => {
+  switch (elem.id) {
+    case 'inptToolsBar':
+      (storeData.config.toolsBarChk)? elem.setAttribute('checked', true) : elem.setAttribute('value', null);
+    break;
+    case 'inptUtilBar':
+      (storeData.config.utilBarChk)? elem.setAttribute('checked', true) : elem.setAttribute('value', null);
+    break;
+    case 'inptDirBar':
+      (storeData.config.dirBarChk)? elem.setAttribute('checked', true) : elem.setAttribute('value', null);
+    break;
+    case 'inptStyleMemoEditor':
+      (storeData.config.styleMemoEditorChk)? elem.setAttribute('checked', true) : elem.setAttribute('value', null);
+    break;
+  }
+});
+
+// 체크박스 체인지 이벤트 핸들러
+$inptChks.forEach((elem, index, array) => {
+  elem.addEventListener('change', () => {
+    (elem.getAttribute('checked'))? elem.removeAttribute('checked') : elem.setAttribute('checked', 'checked');
+
+    switch (elem.id) {
+      case 'inptToolsBar':
+        elem.setAttribute('value', elem.getAttribute('checked'));
+      break;
+      case 'inptUtilBar':
+        elem.setAttribute('value', elem.getAttribute('checked'));
+      break;
+      case 'inptDirBar':
+        elem.setAttribute('value', elem.getAttribute('checked'));
+      break;
+      case 'inptStyleMemoEditor':
+        elem.setAttribute('value', elem.getAttribute('checked'));
+      break;
+    }
+
+    // $btnSubmit.click();
+  });
+});
+
+// 콤보박스 초기설정
+switch (storeData.config.language) {
+  case 'en-US':
+    $language.selectedIndex = 0;
+  break;
+  case 'ko':
+    $language.selectedIndex = 1;
+  break;
+}
+
+// 콤보박스 체인지 이벤트 핸들러
+// $language.addEventListener('change', () => {
+//   $btnSubmit.click();
+// });
+</script>
+</body>
+</html>

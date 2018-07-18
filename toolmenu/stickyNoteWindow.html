@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sticky Note :: JMemo</title>
+<style>
+*{margin:0;padding:0}
+::-webkit-scrollbar{width:8px;height:3px;border-left:0}
+::-webkit-scrollbar-thumb{background-color:#bdbc84;border-radius:4px}
+::-webkit-scrollbar-track{border-radius:4px;background-color:#fcf8d0;box-shadow:inset 0 0 6px rgba(0,0,0,.3)}
+:root,body{height:100%}
+:root{font-size:.625em;}
+body,button,h1,h2,h3,h4,h5,input,select,table,textarea{font-family:HelveticaNeue-Light,AppleSDGothicNeo-Light,sans-serif}
+body{position:relative;background:#fdfdcb;background:-webkit-linear-gradient(top, #fdfdcb 0%,#fcfbb4 40%,#fcf9a1 100%);background:linear-gradient(to bottom, #fdfdcb 0%,#fcfbb4 40%,#fcf9a1 100%);font-size:1.4rem}
+body:after{content:'';position:absolute;right:.3rem;bottom:.3rem;width:8px;height:8px;background:url(../src/img/ico_sticky_resizable.png) no-repeat;background-size:8px auto}
+.sticky-note{display:-webkit-flex;display:flex;flex-direction:column;height:100%}
+.sticky-note>header{-webkit-app-region:drag;position:relative;padding:.6rem;background-color:#f8f7b6}
+.sticky-note>header:after{display:table;content:'';clear:both}
+.sticky-note>header h1{overflow:hidden;clip:rect(0 0 0 0);position:absolute;width:1px;height:1px}
+.sticky-note>header .btn-clse{-webkit-app-region:no-drag;outline:0;float:right;position:relative;width:18px;height:18px;border:1px solid rgba(0,0,0,.25);border-radius:2px;background-color:rgba(255,255,255,.25);-webkit-transition:all 200ms ease-out;transition:all 200ms ease-out;vertical-align:top;cursor:pointer}
+.sticky-note>header .btn-clse:after,
+.sticky-note>header .btn-clse:before{content:'';position:absolute;top:50%;left:50%;width:12px;height:1px;background-color:#000;-webkit-transition:all 400ms cubic-bezier(0.25, 0.6, 0.36, 1);transition:all 400ms cubic-bezier(0.25, 0.6, 0.36, 1);opacity:.4}
+.sticky-note>header .btn-clse:before{-webkit-transform:translate3d(-50%, -50%, 0) rotate(-45deg);transform:translate3d(-50%, -50%, 0) rotate(-45deg);-webkit-transition-delay:65ms;transition-delay:65ms}
+.sticky-note>header .btn-clse:after{-webkit-transform:translate3d(-50%, -50%, 0) rotate(45deg);transform:translate3d(-50%, -50%, 0) rotate(45deg)}
+.sticky-note>header .btn-clse:hover:after{-webkit-transform:translate3d(-50%, -50%, 0) rotate(225deg);transform:translate3d(-50%, -50%, 0) rotate(225deg)}
+.sticky-note>header .btn-clse:hover:before{-webkit-transform:translate3d(-50%, -50%, 0) rotate(135deg);transform:translate3d(-50%, -50%, 0) rotate(135deg)}
+.sticky-note>header .btn-clse>span{overflow:hidden;clip:rect(0 0 0 0);position:absolute;width:1px;height:1px}
+.sticky-note>.content{-webkit-flex:1;-ms-flex:1;flex:1;overflow-y:auto;margin:.4rem .4rem 1.6rem}
+.sticky-note .textarea{outline:0;height:100%;padding:1rem;box-sizing:border-box}
+</style>
+</head>
+<body>
+<article class="sticky-note">
+  <header>
+    <h1>Sticky Memo</h1>
+    <button type="button" class="btn-clse"><span>close</span></button>
+  </header>
+  <section class="content">
+    <div contenteditable="false" class="textarea"></div>
+  </section>
+</article>
+
+<script>
+const electron = require('electron');
+const {ipcRenderer, remote} = electron;
+let stickyNoteData = null;
+
+ipcRenderer.on('stickyNote:data', (e, item) => {
+  stickyNoteData = item;
+
+  document.querySelector('.textarea').innerHTML = item.context;
+});
+
+document.querySelector('.btn-clse').addEventListener('click', () => {
+  ipcRenderer.send('stickyNote:close', stickyNoteData);
+  console.log( remote.getCurrentWindow() );
+  remote.getCurrentWindow().close(true);
+}, false);
+
+ipcRenderer.on('stickyNote:testReq', () => {
+  ipcRenderer.send('stickyNote:testRes', {
+    x: remote.getCurrentWindow().getPosition()[0],
+    y: remote.getCurrentWindow().getPosition()[1],
+    value: document.querySelector('.textarea').innerHTML
+  });
+});
+
+// remote.getCurrentWindow().on('move', () => {
+//   const currentWindow = remote.getCurrentWindow();
+//
+//   const xPos = currentWindow.getPosition()[0];
+//   const yPos = currentWindow.getPosition()[1];
+//   //localStorage.setItem('', `{x: ${xPos}, y: ${yPos}}`);
+//   console.log( currentWindow.id )
+// });
+</script>
+</body>
+</html>
