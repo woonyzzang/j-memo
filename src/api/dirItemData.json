@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "dirName": "메모1",
+    "memoList": [
+      {
+        "title": "새로운 메모",
+        "date": "0:00",
+        "value": "추가 텍스트 없음"
+      }
+    ],
+    "count": 1,
+    "childs": null
+  },
+  {
+    "id": 2,
+    "dirName": "메모2",
+    "memoList": [
+      {
+        "title": "새로운 메모",
+        "date": "0:00",
+        "value": "추가 텍스트 없음"
+      }
+    ],
+    "count": 1,
+    "childs": null
+  }
+]

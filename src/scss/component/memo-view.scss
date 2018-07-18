@@ -1,0 +1,142 @@
+/* =memo-view */
+.memo-view {
+  //overflow-y: auto;
+  //-webkit-overflow-scrolling: touch;
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-left: -1px;
+  border: 1px solid #dedede;
+  border-width: 0 1px;
+  background-color: #fbfbf9;
+
+  &.memo-view-lock {
+    .ql-toolbar {
+      &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        opacity: 0;
+      }
+    }
+  }
+
+  form,
+  fieldset {
+    height: 100%;
+  }
+
+  fieldset {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+  }
+
+  legend {
+    @extend %blind;
+  }
+
+  time {
+    display: block;
+    padding: .8rem;
+    font-family: tahoma;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #969899;
+    text-align: center;
+  }
+
+  // .textarea {
+  //   outline: none;
+  //   //overflow-y: hidden;
+  //   -webkit-flex: 1;
+  //   -ms-flex: 1;
+  //   flex: 1;
+  //   width: 100%;
+  //   height: calc(100% - (1.8 * 2)rem);
+  //   min-height: 300px;
+  //   padding: 1.8rem;
+  //   font-size: 1.5rem;
+  //   line-height: 1.6;
+  //   border: 0;
+  //   background-color: transparent;
+  //   box-sizing: border-box;
+  //   resize: none;
+  //
+  //   // line-height: 3.8;
+  //   // background-attachment: local;
+  //   // background-image:
+  //   //     linear-gradient(to right, #fbfbf9 10px, transparent 10px),
+  //   //     linear-gradient(to left, #fbfbf9 10px, transparent 10px),
+  //   //     repeating-linear-gradient(#fbfbf9, #fbfbf9 30px, #ccc 30px, #ccc 31px, #fbfbf9 31px);
+  // }
+
+  .text-editor {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100% - (1.8 * 2)rem);
+
+    &.style-editor {
+      .ql-toolbar {
+        display: block;
+      }
+    }
+
+    .quill  {
+      display: -webkit-flex;
+      display: flex;
+      flex-direction: column-reverse;
+      height: 100%;
+    }
+
+    .ql-toolbar {
+      display: none;
+      position: relative;
+      margin-bottom: -.6rem;
+      border-width: 1px 0 0;
+
+      .ql-formats {
+        margin-right: .2rem;
+      }
+
+      .ql-picker-options {
+        top: auto;
+        bottom: 100%;
+      }
+    }
+
+    .ql-container {
+      overflow: hidden;
+      border: 0;
+
+      strong {
+        font-weight: bold;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      .ql-tooltip {
+        padding: .4rem 1rem;
+        transform: translateX(136px) translateY(10px);
+      }
+    }
+  }
+
+  button[type=submit] {
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    position: absolute;
+    width: 1px;
+    height: 1px;
+  }
+}

@@ -1,0 +1,126 @@
+/* =memo-list */
+.memo-list {
+  width: 34%;
+  // max-width: 34%;
+  margin-left: -1px;
+  border: 1px solid #dedede;
+  border-width: 0 1px;
+  background-color: #f8f8f6;
+  box-sizing: border-box;
+
+  li {
+    position: relative;
+    margin-top: -1px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 2rem;
+      height: 1px;
+      background-color: #dedede;
+    }
+
+    &.active {
+      &:after {
+        display: none;
+      }
+
+      >a {
+        background-color: #fbeeb5;
+      }
+    }
+
+    >a {
+      display: block;
+      padding: 1.2rem 2rem;
+      color: #000;
+      text-decoration: none;
+    }
+  }
+
+  h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .info {
+    display: -webkit-flex;
+    display: flex;
+    margin-top: .6rem;
+
+    >time,
+    >p {
+      display: block;
+    }
+
+    >time {
+      font-family: tahoma;
+      font-size: 1.3rem;
+      color: #333;
+    }
+
+    >p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      margin-left: .8rem;
+      font-size: 1.2rem;
+      color: #666;
+      white-space: nowrap;
+    }
+  }
+
+  .lock {
+    position: absolute;
+    right: 1rem;
+    bottom: 1.2rem;
+
+    label {
+      display: block;
+      width: 8px;
+      height: 10px;
+    }
+
+    input[type=checkbox] {
+      -webkit-appearance: none;
+      width: (16px/2);
+      height: (20px/2);
+      margin: 0;
+      vertical-align: top;
+
+      &[value=on] {
+        background: url(#{$FILE-PATH}/img/ico_lock.png) no-repeat;
+        background-size: 100% auto;
+      }
+    }
+
+    span {
+      @extend %blind;
+    }
+  }
+
+  .parent-dir {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: .4rem;
+    padding-left: 1.8rem;
+    background: url(#{$FILE-PATH}/img/ico_dir.png) no-repeat 0 50%;
+    background-size: (26px/2) auto;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: #666;
+    white-space: nowrap;
+  }
+}

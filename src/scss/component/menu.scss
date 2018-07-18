@@ -1,0 +1,113 @@
+/* =menu */
+.menu {
+  position: relative;
+  z-index: 5;
+  width: 40px;
+  padding: 0 .1rem;
+  margin-right: -1px;
+  border-right: 1px solid rgba(0,0,0,.16);
+  // background-color: #d8d6d8;
+  background: linear-gradient(90deg, #e2e2e2 0%, #d9d9d9 100%);
+  box-sizing: border-box;
+
+  >.group {
+    display: block;
+    position: relative;
+    padding: .1rem 0;
+
+    &:first-child {
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: .6rem;
+      right: .6rem;
+      height: 1px;
+      background-color: rgba(0,0,0,.2);
+    }
+  }
+
+  button[type=button] {
+    width: 100%;
+    margin: .2rem 0;
+    padding: .8rem 0;
+    border: 1px solid transparent;
+    border-radius: .3rem;
+    background-color: transparent;
+    text-align: center;
+    //box-shadow: 0 1px 0 rgba(0,0,0,.08);
+    cursor: pointer;
+
+    &:hover {
+      border-color: #d2d2d2;
+      background-color: #f2f2f2;
+    }
+
+    &~button[type=button] {
+      margin-top: -.2rem;
+    }
+
+    >span {
+      display: inline-block;
+      overflow: hidden;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      text-indent: -9999px;
+      vertical-align: top;
+    }
+
+    &.btn-toggle-dir {
+      >span {
+        width: (44px/2);
+        height: (34px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_toggle_dir.png);
+      }
+    }
+
+    &.btn-ndir {
+      >span {
+        width: (48px/2);
+        height: (36px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_ndir.png);
+      }
+    }
+
+    &.btn-rdir {
+      >span {
+        width: (48px/2);
+        height: (36px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_rdir.png);
+      }
+    }
+
+    &.btn-nmemo {
+      >span {
+        width: (46px/2);
+        height: (36px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_nmemo.png);
+      }
+    }
+
+    &.btn-rmemo {
+      >span {
+        width: (46px/2);
+        height: (36px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_rmemo.png);
+      }
+    }
+
+    &.btn-core-set {
+      >span {
+        width: (34px/2);
+        height: (32px/2);
+        background-image: url(#{$FILE-PATH}/img/ico_core_set.png);
+      }
+    }
+  }
+}

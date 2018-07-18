@@ -1,0 +1,16 @@
+/* =Webkit Browser Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 3px;
+  border-left: 0;
+  // background-color: rgba(0,0,0,0.1);
+}
+
+// ::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+
+::-webkit-scrollbar-thumb {
+  background-color: #b6b8ba;
+  border-radius: 4px;
+}

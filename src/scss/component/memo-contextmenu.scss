@@ -1,0 +1,80 @@
+/* =menucontext */
+.memo-contextmenu {
+  >.menucontext {
+    visibility: hidden;
+    position: fixed;
+    width: 134px;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .4rem;
+    background-color: #f0f0f0;
+    font-size: 1.3rem;
+    box-shadow: 0 0 16px rgba(0,0,0,.2);
+
+    &.on {
+      visibility: visible;
+    }
+  }
+
+  .menuitem-group {
+    padding: .6rem 0;
+
+    .menuitem {
+      margin-top: 0;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .menuitem {
+    margin-top: -1px;
+    padding: .6rem 0;
+    border: 1px solid #dfdede;
+    border-width: 1px 0;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    >a {
+      display: block;
+      position: relative;
+      padding: .6rem 2rem;
+      color: #333;
+      cursor: context-menu;
+
+      &:after {
+        display: none;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #fff;
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: #4a9afb;
+        color: #fff;
+      }
+
+      &.disabled {
+        color: #bbb5b5;
+
+        &:after {
+          display: block;
+        }
+
+        &:hover {
+          background-color: transparent;
+          color: #bbb5b5;
+        }
+      }
+    }
+  }
+}

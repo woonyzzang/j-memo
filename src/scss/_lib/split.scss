@@ -1,0 +1,30 @@
+/* =Spilt */
+.split {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.gutter {
+  // background-color: #eee;
+  margin: 0 -.4rem;
+  opacity: 0;
+
+  &.gutter-horizontal {
+    // background-image: url('../grips/vertical.png');
+    cursor: ew-resize;
+  }
+
+  &.gutter-vertical {
+    // background-image: url('../grips/horizontal.png');
+    cursor: ns-resize;
+  }
+}
+
+// .split.split-horizontal,
+// .gutter.gutter-horizontal {
+//   height: 100%;
+//   float: left;
+// }

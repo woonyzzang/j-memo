@@ -1,0 +1,60 @@
+@charset "utf-8";
+// <U PLEATE> UI Dev Team JSW 171219
+
+@import './_common/variable';
+//@import './_common/mixin';
+@import './_common/placeholder';
+//@import './_common/webfont';
+@import './_common/reset';
+
+@import './_common/scrolling';
+@import './_lib/split';
+
+/** =J MEMO */
+*:focus {
+  outline: 0;
+}
+
+:root, body, #root, #app {
+  height: 100%;
+}
+
+:root {
+  font-size: $DEFAULT-FONT-SIZE;
+}
+
+body {
+  -webkit-app-region: drag;
+  // min-width: 840px;
+  font-size: 1.6rem;
+  color: #000;
+  word-break: break-all;
+}
+
+/* =app */
+.app {
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+
+  &.on {
+    border-top: 1px solid rgba(0,0,0,.2);
+  }
+
+  @import './component/menu';
+
+  .container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: calc(100% - 40px);
+    height: 100%;
+  }
+
+  @import './component/memo-dir';
+  @import './component/memo-list';
+  @import './component/memo-view';
+  @import './component/memo-contextmenu';
+}
