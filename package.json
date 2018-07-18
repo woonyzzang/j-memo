@@ -1,0 +1,116 @@
+    {
+    "build": {
+        "productName": "J Memo",
+        "appId": "com.electron.jmemo",
+        "asar": true,
+        "protocols": {
+            "name": "j Memo",
+            "schemes": [
+                "j Memo"
+            ]
+        },
+        "mac": {
+            "target": [
+                "default"
+            ],
+            "icon": "./assets/icons/mac/icon.icns"
+        },
+        "dmg": {
+            "title": "J Memo",
+            "icon": "./assets/icons/mac/icon.icns"
+        },
+        "win": {
+            "target": [
+                "zip",
+                "nsis"
+            ],
+            "icon": "./assets/icons/win/icon.ico"
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb",
+                "rpm",
+                "zip",
+                "tar.gz"
+          ],
+          "icon": "./assets/icons/png/icon.png"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        },
+        "directories": {
+            "buildResources": "./",
+            "output": "./build/",
+            "app": "."
+        }
+    },
+    "productName": "JMemo",
+    "name": "j-memo",
+    "version": "1.0.0",
+    "description": "Sticky Note Application for OS",
+    "main": "main.js",
+    "scripts": {
+        "test": "tsc -p ./tsconfig.json",
+        "build": "webpack --bail --progress --profile",
+        "server": "webpack-dev-server --hot --host 0.0.0.0",
+        "start": "electron . --disable-gpu",
+        "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+        "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Shopping List App\"",
+        "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=release-builds",
+        "build:osx": "build --mac",
+        "build:linux": "npm run build:linux32 && npm run build:linux64",
+        "build:linux32": "build --linux --ia32",
+        "build:linux64": "build --linux --x64",
+        "build:win": "npm run build:win32 && npm run build:win64",
+        "build:win32": "build --win --ia32",
+        "build:win64": "build --win --x64"
+    },
+    "keywords": [
+        "Ractjs",
+        "TypeScript"
+    ],
+    "author": "wooonyzzang",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jquery": "^3.2.18",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+        "babel-plugin-transform-es3-property-literals": "^6.22.0",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.24.1",
+        "copy-webpack-plugin": "^4.3.1",
+        "css-loader": "^0.28.9",
+        "electron": "^1.7.10",
+        "electron-builder": "^19.55.2",
+        "electron-packager": "^10.1.1",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "file-loader": "^1.1.5",
+        "html-webpack-plugin": "^2.30.1",
+        "moment": "^2.20.1",
+        "node-sass": "^4.7.2",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.19.0",
+        "ts-loader": "^3.1.1",
+        "typescript": "^2.6.2",
+        "url-loader": "^0.6.2",
+        "webpack": "^3.10.0",
+        "webpack-dev-server": "^2.11.0"
+    },
+    "dependencies": {
+        "immutable": "^3.8.2",
+        "prop-types": "^15.6.0",
+        "react": "^16.2.0",
+        "react-addons-update": "^15.6.2",
+        "react-dom": "^16.2.0",
+        "react-quill": "^1.2.3",
+        "react-redux": "^5.0.6",
+        "react-sortable-hoc": "^0.6.8",
+        "redux": "^3.7.2",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.2.0"
+    }
+}
