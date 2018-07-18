@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>JMemo</title>
+<link rel="stylesheet" href="css/jmemo.css">
+</head>
+<body>
+<main id="app" class="app">
+  <div id="menu" class="menu">
+    <span class="group">
+      <button type="button" title="">폴더</button>
+      <button type="button" title="">삭제</button>
+    </span>
+    <span class="group">
+      <button type="button" title="">암호</button>
+    </span>
+    <span class="group">
+      <button type="button" title="">검색</button>
+    </span>
+  </div>
+  <div id="container" class="container">
+    <!-- memo-dir -->
+    <section id="memoDir" class="memo-dir split split-horizontal">
+      <h1>나의 Windows</h1>
+      <nav>
+        <strong>모든 메모 <span class="count">375</span></strong>
+        <ul>
+          <li class="active">
+            <a href="#">메모</a>
+            <span class="count">3</span>
+          </li>
+          <li>
+            <a href="#">메모2</a>
+            <span class="count">1</span>
+          </li>
+        </ul>
+      </nav>
+      <button type="button" class="btn-new">새로운 폴더</button>
+    </section>
+    <!-- //memo-dir -->
+    <!-- memo-list -->
+    <section id="memoList" class="memo-list split split-horizontal">
+      <ol>
+        <li class="active">
+          <a href="#">
+            <h2>새로운 메모</h2>
+            <div class="info">
+              <time>오전 9:14</time>
+              <p>추가 텍스트 없음</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <h2>새로운 메모2</h2>
+            <div class="info">
+              <time>2016. 4. 18.</time>
+              <p>추가 텍스트 없음</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <h2>새로운 메모3</h2>
+            <div class="info">
+              <time>2016. 4. 18.</time>
+              <p>추가 텍스트 없음 추가 텍스트 없음 추가 텍스트 없음</p>
+            </div>
+          </a>
+        </li>
+      </ol>
+    </section>
+    <!-- //memo-list -->
+    <!-- memo-view -->
+    <section id="memoView" class="memo-view split split-horizontal">
+      <time>2016년 4월 26일 오전 9:41</time>
+      <textarea name="" id="" cols="30" rows="10"></textarea>
+    </section>
+    <!-- //memo-view -->
+  </div>
+</main>
+
+<script src="js/split.min.js"></script>
+<script>
+Split(['#memoDir', '#memoList', '#memoView'], {
+  sizes: [22, 34, 44],
+  minSize: [160, 260, 400],
+  gutterSize: 8,
+  snapOffset: 0,
+  onDrag: function(callback) {
+    //var $memoDir = document.querySelector('#memoDir');
+    //if (parseInt(getComputedStyle($memoDir).width, 10) === 160) {}
+  },
+  onDragStart: function(callback) {
+    //console.log(callback);
+    //console.log(this);
+  },
+  onDragEnd: function(callback) {
+    //console.log(callback);
+    //console.log(this);
+  }
+});
+
+window.addEventListener('resize', function() {
+  if (window.innerHeight < 360) {
+    console.log( 'true' );
+    return;
+  }
+}, false);
+</script>
+</body>
+</html>
