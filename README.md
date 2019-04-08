@@ -5,7 +5,7 @@
 ![J Memo](@preview/J-Memo-Preview.jpg)
 
 ## 버전
-v1.0.0
+v0.9.2
 
 ### TODO
 - 다중 스티커 메모 기능 추가 구현
