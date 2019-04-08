@@ -1,9 +1,11 @@
 ## J Memo
+> 로컬에 반영구적으로 데이터가 저장되고 연동되어지는 메모장 OS 어플리케이션 입니다.
 
-로컬에 반영구적으로 데이터가 저장되고 연동되어지는 메모장 OS 어플리케이션 입니다.
+## preview
+![J Memo](@preview/J-Memo-Preview.jpg)
 
-### preview
-![J Memo](@preview/UPL-Memo-preview.jpg)
+## 버전
+v1.0.0
 
 ### TODO
 - 다중 스티커 메모 기능 추가 구현
